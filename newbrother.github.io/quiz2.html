@@ -1,0 +1,133 @@
+<script src="https://code.jquery.com/jquery-1.11.3.js"></script>
+<meta charset="UTF-8" />
+
+<h1>단답형모음2-전자등록(6),대행(6) 띄어쓰지마세요</h1>
+
+<div style="display: none" class="quiz">
+	(4자)투자자계좌부에 기재된 증권은 그 기재를 한 떄에 예탁 간주되는 투자자보호 제도는?
+</div>
+<div style="display: none" class="quiz">
+	(6자)금예탁제도에서 생산금, 수입금을 보관하는 계좌는?
+</div>
+<div style="display: none" class="quiz">
+	(15자,온점생략)전자증권제도 근거법령은?
+</div>
+<div style="display: none" class="quiz">
+	(7자)전자등록주식등의 권리자가 공탁법에 따라 공탁하거나 자본시장법에 따라 보증금,공탁금을 대신 납부하는 경우 전자등록주식등에 갈음해 제출하는 증명서는?
+</div>
+<div style="display: none" class="quiz">
+	(숫자)국내주식 소수단위 거래에서 온주 1주당 발행하는 수익증권의 수는?
+</div>
+<div style="display: none" class="quiz">
+	(6자)투자자 신청에 따라 증권등의 발행인이 신규로 발행하는 증권등을 투자자에 갈음해 예탁결제원을 명의인으로 해 한번에 예탁 하는 제도는?
+</div>
+<div style="display: none" class="quiz">
+	(8자)명의개서대리인 자격을 위해 금융위 등록요건으로 구축해야 하는 것은?(대행업무와 기타업무 조직분리하는 것)
+</div>
+<div style="display: none" class="quiz">
+	(5자)증권대행업무 심사원칙으로 위변조여부,사고신고유무,공시최고-제권판결 유무,압류여부만 보는 것을 어떤 요건만 심사한다고 하는가?
+</div>
+<div style="display: none" class="quiz">
+	(11자)명의개서 대리인 제도가 도입된 법률은?
+</div>
+<div style="display: none" class="quiz">
+	(4자)주식취득자의 청구에 의해 주주명부와 주권에 명의변경 사실을 등재하는 것은?
+</div>
+<div style="display: none" class="quiz">
+	(6자)기존주주 및 우리사주 우선배정하고 실권주는 일반공모를 하는 방식은?
+</div>
+<div style="display: none" class="quiz">
+	(15자)타인명의 특별계좌로 등록된 소액주권 보유자 권리 보호를 위해 도입한 제도는? 이 제도 덕분에 권리증명서류 제출 불가한 천만원이하 소액주주도 확약서로 계좌대체 가능하게 되었다.
+</div>
+
+<div style="display: none" class="quiz_result">
+	의제예탁,분리보관계좌,주식사채등의전자등록에관한법률,전자등록증명서,1000000,일괄예탁제도,이해상충방지체계,형식적요건,자본시장육성에관한법률,명의개서,주주우선공모,소액주주특별계좌인출간소화제도
+</div>
+
+<div id="contents"></div>
+
+<script>
+  var quizCnt = 0;
+  var result = 0;
+  $(document).ready(function () {
+    $(".quiz").filter(function (idx) {
+      quizCnt++;
+      var name = 1 + idx;
+      var content = this.innerHTML.trim().split("\n");
+      if (content.length > 1) {
+        $("#contents").append(name + ". " + content[0] + "<br />");
+        for (var i = 1; i < content.length; i++) {
+          $("#contents").append(
+            "<input type='radio' name='ck" +
+              name +
+              "' id='ck" +
+              name +
+              "_" +
+              i +
+              "' value='" +
+              i +
+              "' /><label for='ck" +
+              name +
+              "_" +
+              i +
+              "'>" +
+              content[i] +
+              "</label><br />"
+          );
+        }
+        $("#contents").append("<br />");
+      } else {
+        $("#contents").append(name + ". " + content[0] + "<br />");
+        $("#contents").append("<input type='text' name='ck" + name + "' />");
+        $("#contents").append("<br />");
+      }
+    });
+    $("#contents").append(
+      "<br /><br /><br /><input type='button' value='점수보기' onclick='getResult()' />"
+    );
+	$("#contents").append(
+      "<br /><br /><input type='button' value='정답보기' onclick='getDap()' /><br /><br />"
+    );
+    $("#contents").append(
+      "<input type='button' value='이전날짜로' onclick='goPrev()' /><br />"
+    );
+    $("#contents").append(
+      "<input type='button' value='다음날짜로' onclick='goNext()' /><br />"
+    );
+    result = $(".quiz_result").text().trim().split(",");
+  });
+  function goNext() {
+    location.href = "https://newbrother.github.io/quiz3.html";
+  }
+  function goPrev() {
+    location.href = "https://newbrother.github.io/quiz.html";
+  }
+  function getDap(){
+	alert(result);
+  }
+  function getResult() {
+    var scoreCnt = 0;
+    $(".quiz").filter(function (idx) {
+      var name = 1 + idx;
+      var content = this.innerHTML.trim().split("\n");
+      var ck_val;
+      if (content.length > 1) {
+        ck_val =
+          $("input[name=ck" + name + "]:checked").val() == undefined
+            ? ""
+            : $("input[name=ck" + name + "]:checked").val();
+      } else {
+        ck_val =
+          $("input[name=ck" + name + "]").val() == undefined
+            ? ""
+            : $("input[name=ck" + name + "]").val();
+      }
+      if (String(result[idx]) == String(ck_val)) {
+        scoreCnt++;
+      }
+    });
+    alert(
+      scoreCnt + "개 정답(" + Math.round((scoreCnt / quizCnt) * 100) + "점)"
+    );
+  }
+</script>
