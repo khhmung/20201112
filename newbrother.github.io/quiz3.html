@@ -1,0 +1,130 @@
+<script src="https://code.jquery.com/jquery-1.11.3.js"></script>
+<meta charset="UTF-8" />
+
+<h1>단답형모음3-청산결제(5),집합투자-자산운용(6) 띄어쓰지마세요</h1>
+<div style="display: none" class="quiz">
+    (6자)매매확인 방법 중 하나로 채권기관투자자결제시 사용하며, 매도자/매수자가 각각 거래내역을 보고하여 상호 대조하는 방법은?
+</div>
+<div style="display: none" class="quiz">
+    (8자)CCP의 손실분담 규칙으로 채무불이행자지급모형,생존자지급모형,제3자지급모형을 혼합한 모형은?
+</div>
+<div style="display: none" class="quiz">
+    (4자)결제 위험 중 하나로 거래일방은 이행했으나 상대방이 이행하지 않아 전액 손실 가능성이 있는 위험은?
+</div>
+<div style="display: none" class="quiz">
+    (4자)증권인도와 대금지급이 분리되어 각각 이루어지는 방식은?
+</div>
+<div style="display: none" class="quiz">
+    (4자,영어대문자)증권인도는 총액, 대금지급은 차감해 결제하는 방식으로, 주식기관결제에 이용하는 방식은?
+</div>
+
+<div style="display: none" class="quiz">
+	(10자)집합투자 관련 법령으로 2004년에 도입되었으며, 동일기능/동일규제로 규제 차익거래를 방지를 시작한 법은?
+</div>
+<div style="display: none" class="quiz">
+	(5자)집합투자제도의 정의 중 투자자로부터 일상적인 운용지시를 받지 않는다는 말은?
+</div>
+<div style="display: none" class="quiz">
+	(9자)다른 집합투자기구가 발행한 집합투자증권에 펀드재산의 50%이상을 투자하는 집합투자기구는?
+</div>
+<div style="display: none" class="quiz">
+	(3자_영어대문자)특정지수 또는 자산의 가격 움직임과 수익률이 연동되도록 설계된 펀드이며 거래소 유가증권 시장에 상장되어 주식처럼 거래가 되는 금융상품은?
+</div>
+<div style="display: none" class="quiz">
+	(3자)사모펀드 관련 제도개편으로 전에는 운용목적으로 펀드를 구분했다면 현재는 ( )를 기준으로 사모펀드를 구분한다
+</div>
+<div style="display: none" class="quiz">
+	(3자)자산운용 참가자를 모두 표준메세지를 통해 자동화된 시스템으로 연결해 펀드의 설정-운용-환매에 이르는 전과정을 지원하는 시스템은?
+</div>
+
+<div style="display: none" class="quiz_result">
+	쌍방매매확인,혼합이행보증모형,원본위험,분리결제,DVP2,간접투자자산운용업법,독립적운용,재간접집합투자기구,ETF,투자자,펀드넷
+</div>
+
+<div id="contents"></div>
+
+<script>
+  var quizCnt = 0;
+  var result = 0;
+  $(document).ready(function () {
+    $(".quiz").filter(function (idx) {
+      quizCnt++;
+      var name = 1 + idx;
+      var content = this.innerHTML.trim().split("\n");
+      if (content.length > 1) {
+        $("#contents").append(name + ". " + content[0] + "<br />");
+        for (var i = 1; i < content.length; i++) {
+          $("#contents").append(
+            "<input type='radio' name='ck" +
+              name +
+              "' id='ck" +
+              name +
+              "_" +
+              i +
+              "' value='" +
+              i +
+              "' /><label for='ck" +
+              name +
+              "_" +
+              i +
+              "'>" +
+              content[i] +
+              "</label><br />"
+          );
+        }
+        $("#contents").append("<br />");
+      } else {
+        $("#contents").append(name + ". " + content[0] + "<br />");
+        $("#contents").append("<input type='text' name='ck" + name + "' />");
+        $("#contents").append("<br />");
+      }
+    });
+    $("#contents").append(
+      "<br /><br /><br /><input type='button' value='점수보기' onclick='getResult()' />"
+    );
+	$("#contents").append(
+      "<br /><br /><input type='button' value='정답보기' onclick='getDap()' /><br /><br />"
+    );
+    $("#contents").append(
+      "<input type='button' value='이전날짜로' onclick='goPrev()' /><br />"
+    );
+    $("#contents").append(
+      "<input type='button' value='다음날짜로' onclick='goNext()' /><br />"
+    );
+    result = $(".quiz_result").text().trim().split(",");
+  });
+  function goNext() {
+    location.href = "https://newbrother.github.io/quiz4.html";
+  }
+  function goPrev() {
+    location.href = "https://newbrother.github.io/quiz2.html";
+  }
+  function getDap(){
+	alert(result);
+  }
+  function getResult() {
+    var scoreCnt = 0;
+    $(".quiz").filter(function (idx) {
+      var name = 1 + idx;
+      var content = this.innerHTML.trim().split("\n");
+      var ck_val;
+      if (content.length > 1) {
+        ck_val =
+          $("input[name=ck" + name + "]:checked").val() == undefined
+            ? ""
+            : $("input[name=ck" + name + "]:checked").val();
+      } else {
+        ck_val =
+          $("input[name=ck" + name + "]").val() == undefined
+            ? ""
+            : $("input[name=ck" + name + "]").val();
+      }
+      if (String(result[idx]) == String(ck_val)) {
+        scoreCnt++;
+      }
+    });
+    alert(
+      scoreCnt + "개 정답(" + Math.round((scoreCnt / quizCnt) * 100) + "점)"
+    );
+  }
+</script>
